@@ -1,0 +1,5 @@
+.idea
+.vagrant
+.vault_pass
+*.log
+*.retry

@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install required system packages
+      apt: pkg={{ item.name }} state={{ item.state }} update-cache=yes
+      with_items: 
+        - { name: ntp, state: latest }
+        - { name: python-pip, state: latest }
+        - { name: python3-pip, state: latest }
+
+    - name: Ensure pip_install_packages are installed.
+      pip:
+        executable: "pip"
+        name: "{{ item.name | default(item) }}"
+        version: "{{ item.version | default(omit) }}"
+        state: "{{ item.state | default(omit) }}"
+      with_items: 
+        - { name: ansible, version: 2.6, state: present }
+        - { name: psycopg2 }
+
+
+- hosts: all
+  become: true
+  roles:
+    - {role: ssh_keypair, tags: [ssh]}
+    - {role: rabbitmq, tags: [rabbitmq]}
+    - {role: locale, tags: [locale]}
+    - {role: database, tags: [database]}
+    - {role: aws_cli, tags: [aws_cli]}
