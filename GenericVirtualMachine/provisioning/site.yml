@@ -24,8 +24,8 @@
 - hosts: all
   become: true
   roles:
-    - {role: ssh_keypair, tags: [ssh]}
-    - {role: rabbitmq, tags: [rabbitmq]}
     - {role: locale, tags: [locale]}
-    - {role: database, tags: [database]}
-    - {role: aws_cli, tags: [aws_cli]}
+#    - {role: ssh_keypair, tags: [ssh]}
+#    - {role: rabbitmq, tags: [rabbitmq]}
+#    - {role: database, tags: [database]}
+#    - {role: aws_cli, tags: [aws_cli]}
