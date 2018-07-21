@@ -25,7 +25,7 @@
   become: true
   roles:
     - {role: locale, tags: [locale]}
+    - {role: postgresql, tags: [database]}
 #    - {role: ssh_keypair, tags: [ssh]}
 #    - {role: rabbitmq, tags: [rabbitmq]}
-#    - {role: database, tags: [database]}
 #    - {role: aws_cli, tags: [aws_cli]}

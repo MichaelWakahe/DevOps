@@ -1,6 +1,8 @@
 # Project Title
 
-One Paragraph of project description goes here
+This project sets up a Linux virtual machine on top of Vagrant and
+VirtualBox. It has various software packages installed and can be used
+for your development work.
 
 ## Getting Started
 
@@ -86,7 +88,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Hat tip to anyone whose code was used
 
+* PostgreSQL role adapted from [ANXS](https://github.com/ANXS/postgresql)
