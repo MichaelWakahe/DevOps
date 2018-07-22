@@ -67,7 +67,7 @@ postgresql_user_privileges:
   - name: baz                   # user name
     db: sampledb                  # database
     priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-    role_attr_flags: "CREATEDB" # role attribute flags
+    role_attr_flags: "CREATEDB,SUPERUSER" # role attribute flags
 
 # pg_hba.conf
 postgresql_pg_hba_default:
