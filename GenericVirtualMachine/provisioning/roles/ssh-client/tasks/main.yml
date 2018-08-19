@@ -71,3 +71,13 @@
     dest: "{{ ssh_user_homedir }}/.ssh/id_rsa.pub"
     mode: 0600
     content: "{{ key_public }}"
+
+- name: copy pem files to the .ssh folder
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ssh_user_homedir }}/.ssh"
+    owner: "{{ ssh_user }}"
+    group: "{{ ssh_user }}"
+    mode: preserve
+  with_fileglob:
+    - "*.pem"
