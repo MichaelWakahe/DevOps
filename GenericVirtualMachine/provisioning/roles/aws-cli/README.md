@@ -1,7 +1,7 @@
 AWS CLI role
 ============
 
-A simple role to configure your instance for a set of users to use aws cli [ could do somthing simlar with IAM roles of course ...]
+A simple role to configure your instance for a set of users to use aws cli.
 
 Requirements
 ------------
@@ -59,14 +59,3 @@ Could be used with `shelleg.common` like so:
            aws_cli_user: "{{ common_user }}"
            aws_cli_group: "{{ common_group }}"
 
-
-License
--------
-
-[Apache 2](https://choosealicense.com/licenses/apache-2.0/)
-
-
-Author Information
-------------------
-
-[Haggai Philip Zagury](http://www.tikalk.com/devops/haggai)

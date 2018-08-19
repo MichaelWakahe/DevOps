@@ -1,12 +1,14 @@
 ---
 # tasks file for ansible-role-aws_cli
 
-- name: 'Install Python PIP'
-  become: yes
-  package:
-    pkg: python-pip
-    state: latest
+# This play is handled by another role
+#- name: 'Install Python PIP'
+#  become: yes
+#  package:
+#    pkg: python-pip
+#    state: latest
 
+# This play is handled by another role
 - name: 'Install AWS CLI'
   become: yes
   pip:
@@ -32,7 +34,6 @@
     owner: "{{ aws_cli_user }}"
     group: "{{ aws_cli_group }}"
     mode: 0644
-
 
 - name: 'Copy AWS CLI config'
   become: yes
