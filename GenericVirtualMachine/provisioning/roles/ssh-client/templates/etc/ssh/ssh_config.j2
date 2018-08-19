@@ -135,4 +135,7 @@ Host {{ host.pattern | join(' ') }}
 {% if host.use_roaming is defined %}
   UseRoaming {{ 'yes' if host.use_roaming else 'no' }}
 {% endif %}
+{% if host.server_alive_interval is defined %}
+  ServerAliveInterval {{ host.server_alive_interval }}
+{% endif %}
 {% endfor %}
