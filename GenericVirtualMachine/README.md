@@ -93,3 +93,4 @@ Hat tip to anyone whose code was used
 * PostgreSQL role adapted from [ANXS](https://github.com/ANXS/postgresql)
 * Python pip role adapted from [Geerling Guy](https://github.com/geerlingguy/ansible-role-pip)
 * AWS cli role adapted from [shelleg](https://galaxy.ansible.com/shelleg/aws_cli)
+* SSH client role adapted from [Mischa ter Smitten](https://github.com/Oefenweb/ansible-ssh-client)
