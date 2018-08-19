@@ -91,14 +91,23 @@ None
     ssh_client_configurations: "{{ ssh_client_default_configuration + ssh_client_custom_configurations }}"
 ```
 
-#### License
+It also copies SSH Keypair to the homedir of the given user.
 
-MIT
+## Example Playbook
 
-#### Author Information
+    - hosts: servers
+      vars_files:
+        - vars/ssh_keypair.yml
+      roles:
+        - { role: net2grid.ssh_keypair }
 
-Mischa ter Smitten
+Inside `vars/ssh_keypair.yml` (note the pipe and spacing for the private key!):
 
-#### Feedback, bug-reports, requests, ...
-
-Are [welcome](https://github.com/Oefenweb/ansible-ssh-client/issues)!
+    ssh_user: root
+    ssh_user_homedir: /root
+    key_private: |
+      -----BEGIN RSA PRIVATE KEY-----
+      YiAyGtywXvqcy392xWskk1E8tz6ZNMO0PiNYCx+fLUOwy2lc3G5sBgVEQCBasdxd
+      Fxx9H+VwmNpZXopQtBguuhijfbeX8IHn8voBo9EtTOl4tyEsnLHfyVWAqL3vFXHi
+      -----END RSA PRIVATE KEY-----
+    key_public: "ssh-rsa AAAAB3NzaC1yc2EAAIlh4aKFgC1CcosaReT+921DT9UHLuTOj2Qb69 root@vm"
