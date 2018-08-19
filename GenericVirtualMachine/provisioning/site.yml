@@ -10,48 +10,12 @@
         - { name: python-pip, state: latest }
         - { name: python3-pip, state: latest }
 
-    - name: Ensure pip_install_packages are installed.
-      pip:
-        executable: "pip"
-        name: "{{ item.name | default(item) }}"
-        version: "{{ item.version | default(omit) }}"
-        state: "{{ item.state | default(omit) }}"
-      with_items: 
-        - { name: ansible, version: 2.6, state: present }
-        - { name: psycopg2 }
-
-
 - hosts: all
   become: true
   roles:
     - {role: locale, tags: [locale]}
+    - {role: postgresql, tags: [database], become: true}
+    - {role: python-pip, tags: [pip]}
 #    - {role: ssh_keypair, tags: [ssh]}
 #    - {role: rabbitmq, tags: [rabbitmq]}
 #    - {role: aws_cli, tags: [aws_cli]}
-
-- hosts: all
-  become: true
-  tasks:
-  - include_role:
-       name: postgresql
-    vars:
-      postgresql_users:
-        - name: baz
-          pass: pass
-          encrypted: no       # denotes if the password is already encrypted.
-      postgresql_user_privileges:
-        - name: baz                   # user name
-          db: sampledb                  # database
-          priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-          role_attr_flags: "CREATEDB,SUPERUSER" # role attribute flags
-      postgresql_databases:
-        - name: sampledb
-          owner: baz          # optional; specify the owner of the database
-          hstore: yes         # flag to install the hstore extension on this database (yes/no)
-          uuid_ossp: yes      # flag to install the uuid-ossp extension on this database (yes/no)
-          citext: yes         # flag to install the citext extension on this database (yes/no)
-          encoding: "UTF-8"   # override global {{ postgresql_encoding }} variable per database
-          lc_collate: "en_GB.UTF-8"   # override global {{ postgresql_locale }} variable per database
-          lc_ctype: "en_GB.UTF-8"     # override global {{ postgresql_ctype }} variable per database
-    tags:
-      - database

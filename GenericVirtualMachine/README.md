@@ -91,3 +91,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 Hat tip to anyone whose code was used
 
 * PostgreSQL role adapted from [ANXS](https://github.com/ANXS/postgresql)
+* Python pip role adapted from [Geerling Guy](https://github.com/geerlingguy/ansible-role-pip)
