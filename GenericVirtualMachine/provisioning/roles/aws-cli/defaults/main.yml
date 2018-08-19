@@ -1,0 +1,9 @@
+---
+# defaults file for ansible-role-aws_cli
+
+aws_cli_user: "{{ common_user | d('root') }}"
+aws_cli_group: "{{ common_group | d('root') }}"
+aws_output_format: 'json'
+aws_region: "{{ aws_region }}"
+aws_access_key_id: "{{ aws_access_key }}"
+aws_secret_access_key: "{{ aws_secret_key }}"

@@ -1,0 +1,45 @@
+---
+# tasks file for ansible-role-aws_cli
+
+- name: 'Install Python PIP'
+  become: yes
+  package:
+    pkg: python-pip
+    state: latest
+
+- name: 'Install AWS CLI'
+  become: yes
+  pip:
+    name: awscli
+    state: latest
+
+- name: 'Create the AWS config directory'
+  become: yes
+  become_user: "{{ aws_cli_user }}"
+  file:
+    path: "{{ common_home_dir }}/.aws"
+    state: directory
+    owner: "{{ aws_cli_user }}"
+    group: "{{ aws_cli_group }}"
+    mode: 0755
+
+- name: 'Copy AWS CLI config'
+  become: yes
+  become_user: "{{ aws_cli_user }}"
+  template:
+    src: "aws_cli_config.j2"
+    dest: "{{ common_home_dir }}/.aws/config"
+    owner: "{{ aws_cli_user }}"
+    group: "{{ aws_cli_group }}"
+    mode: 0644
+
+
+- name: 'Copy AWS CLI config'
+  become: yes
+  become_user: "{{ aws_cli_user }}"
+  template:
+    src: aws_cli_credentials.j2
+    dest: "{{ common_home_dir }}/.aws/credentials"
+    owner: "{{ aws_cli_user }}"
+    group: "{{ aws_cli_group }}"
+    mode: 0644
