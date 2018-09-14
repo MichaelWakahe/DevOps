@@ -1,0 +1,43 @@
+---
+
+# Style for Ansible 2.4 and before:
+# - name: with_together for ansible 2.4 and below
+#   hosts: localhost
+
+#   tasks:
+#     - name: print variables
+#       debug:
+#         msg: "First name: {{ item.0 }}; Last name: {{ item.1 }}"
+#       with_together:
+#         - ['James','Jane','Nancy']
+#         - ['Bond','Fonda','Drew']
+
+
+# - name: with_together for ansible 2.4 and below, ex2
+#   hosts: localhost
+
+#   tasks:
+#     - name: print variables
+#       vars:
+#         - list_one: ['James','Jane','Nancy']
+#         - list_two: ['Bond','Fonda','Drew']
+#       debug:
+#         msg: "First name: {{ item.0 }}; Last name: {{ item.1 }}"
+#       with_together:
+#         - "{{ list_one }}"
+#         - "{{ list_two }}"
+
+      
+
+- name: with_together for ansible 2.5 and above
+  hosts: localhost
+
+  tasks:
+    - name: print variables
+      vars:
+        - list_one: ['James','Jane','Nancy']
+        - list_two: ['Bond','Fonda','Drew']
+      debug:
+        msg: "First name: {{ item.0 }}; Last name: {{ item.1 }}"
+      loop: "{{ list_one|zip(list_two)|list }}"
+

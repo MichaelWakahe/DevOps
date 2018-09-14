@@ -1,0 +1,12 @@
+---
+- name: Test environment variables
+  hosts: localhost
+
+  tasks:
+  - name: Print environment variable
+    debug: msg="{{ lookup('env','HOME') }} is an environment variable"
+
+  - name: Print if environment variable is not set to a particular value
+    debug: msg="The environment variable is not set to a certain value"
+    when:
+      - lookup('env','COLORTERM') != "truecolor"
