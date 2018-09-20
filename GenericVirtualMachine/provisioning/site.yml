@@ -15,8 +15,8 @@
   roles:
     # - {role: locale, tags: [locale]}
     # - {role: postgresql, tags: [database], become: true}
-    - {role: setup, tags: [database], become: true}
-    # - {role: python-pip, tags: [pip]}
+    #- {role: setup, tags: [database], become: true}
+    - {role: python-pip, tags: [pip]}
     # - {role: aws-cli, tags: [aws_cli]}
     # - {role: ssh-client, tags: [ssh]}
 #    - {role: rabbitmq, tags: [rabbitmq]}

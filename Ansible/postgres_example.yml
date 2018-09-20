@@ -1,0 +1,21 @@
+- name: postgresql examples
+  hosts: localhost
+
+  tasks:
+    - name: create or modify a postgresql user
+      vars:
+        - db_name: sampledb
+        - db_user: baz
+        - db_password: pass
+        - db_host: localhost
+      postgresql_user:
+        db: "{{db_name}}"
+        name: "{{item.db_role}}"
+        password: "{{item.db_password}}"
+        login_host: "{{db_host}}"
+        state: present
+        role_attr_flags: NOSUPERUSER,NOCREATEDB
+        login_user: "{{db_user}}"
+        login_password: "{{db_password}}"
+      loop:
+          - { db_role: new_user, db_password: a_pass5 }
