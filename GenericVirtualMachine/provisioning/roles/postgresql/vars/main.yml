@@ -1,6 +1,10 @@
 ---
 postgresql_version: 9.6
 
+# Enable postgis
+postgresql_ext_install_postgis: yes
+postgresql_ext_postgis_version: "2.4" 
+
 postgresql_users:
   - name: baz
     pass: pass
