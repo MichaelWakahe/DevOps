@@ -13,8 +13,9 @@
 - hosts: all
   become: true
   roles:
-    # - {role: locale, tags: [locale]}
-    - {role: postgresql, tags: [database], become: true}
+    #- {role: locale, tags: [locale]}
+    #- {role: postgresql, tags: [database], become: true}
+    - {role: redis, tags: [redis], become: true}
     #- {role: setup, tags: [database], become: true}
     # - {role: python-pip, tags: [pip]}
     # - {role: aws-cli, tags: [aws_cli]}

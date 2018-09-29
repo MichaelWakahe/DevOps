@@ -94,3 +94,4 @@ Hat tip to anyone whose code was used
 * Python pip role adapted from [Geerling Guy](https://github.com/geerlingguy/ansible-role-pip)
 * AWS cli role adapted from [shelleg](https://galaxy.ansible.com/shelleg/aws_cli)
 * SSH client role adapted from [Mischa ter Smitten](https://github.com/Oefenweb/ansible-ssh-client) and [NET2GRID](https://github.com/net2grid/ansible-ssh_keypair)
+* Redis role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/redis)
