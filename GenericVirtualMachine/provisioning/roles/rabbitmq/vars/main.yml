@@ -1,0 +1,13 @@
+---
+rabbitmq_vhosts:
+- name:    vhost1
+  tracing: yes # Optional, defaults to "no"
+
+rabbitmq_users:
+# Add user to server and assign full access control on 'vhost1' vhost.
+- vhost: vhost1   # default is '/'
+  user: user1
+  password: password1
+  configure_priv: ".*" # Optional, defaults to ".*"
+  read_priv: ".*" 
+  write_priv: ".*"
