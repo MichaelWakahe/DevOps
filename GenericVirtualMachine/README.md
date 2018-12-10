@@ -97,3 +97,4 @@ Hat tip to anyone whose code was used
 * Redis role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/redis)
 * RabbitMQ role adapted from [opendena](https://travis-ci.org/opendena/ansible-rabbitmq)
 * Docker role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/docker)
+* NodeJS role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/nodejs)
