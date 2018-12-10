@@ -17,9 +17,10 @@
     #- {role: postgresql, tags: [database], become: true}
     #- {role: redis, tags: [redis], become: true}
     #- {role: setup, tags: [database], become: true}
-#    - {role: python-pip, tags: [pip]}
-#    - {role: aws-cli, tags: [aws_cli]}
-#    - {role: ssh-client, tags: [ssh]}
+    #- {role: python-pip, tags: [pip]}
+    #- {role: aws-cli, tags: [aws_cli]}
+    #- {role: ssh-client, tags: [ssh]}
     #- {role: rabbitmq, tags: [rabbitmq]}
-    - {role: docker}
+    #- {role: docker}
+    - {role: nodejs}
 
