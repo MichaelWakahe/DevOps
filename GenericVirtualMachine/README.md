@@ -98,3 +98,4 @@ Hat tip to anyone whose code was used
 * RabbitMQ role adapted from [opendena](https://travis-ci.org/opendena/ansible-rabbitmq)
 * Docker role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/docker)
 * NodeJS role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/nodejs)
+* R role adapted from [Oefenweb](https://galaxy.ansible.com/oefenweb/r)

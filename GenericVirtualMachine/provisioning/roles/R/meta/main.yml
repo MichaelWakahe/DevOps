@@ -1,0 +1,21 @@
+# meta file for r
+---
+galaxy_info:
+  role_name: r
+  author: Mischa ter Smitten
+  company: Oefenweb.nl B.V.
+  description: Set up the latest version of R in Ubuntu systems
+  license: MIT
+  min_ansible_version: 2.5.0.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+  galaxy_tags:
+    - system
+    - r
+    - cran-r
+    - statistics
+dependencies: []
