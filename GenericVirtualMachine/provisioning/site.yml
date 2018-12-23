@@ -22,5 +22,7 @@
     #- {role: ssh-client, tags: [ssh]}
     #- {role: rabbitmq, tags: [rabbitmq]}
     #- {role: docker}
-    - {role: nodejs}
+    #- {role: nodejs}
+    #- {role: R}
+    - {role: RStudio-server}
 

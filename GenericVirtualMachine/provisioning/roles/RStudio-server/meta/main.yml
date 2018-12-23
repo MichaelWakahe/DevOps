@@ -1,21 +1,24 @@
-# meta file for r
+# meta file for rstudio-server
 ---
 galaxy_info:
-  role_name: r
+  role_name: rstudio-server
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
-  description: Set up the latest version of R in Ubuntu systems
+  description: Set up (the latest version of) RStudio server in Debian-like systems
   license: MIT
   min_ansible_version: 2.5.0.0
   platforms:
     - name: Ubuntu
       versions:
+        - precise
         - trusty
         - xenial
         - bionic
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
   galaxy_tags:
+    - development
     - system
-    - r
-    - cran-r
-    - statistics
 dependencies: []

@@ -1,8 +1,7 @@
 # Project Title
 
-This project sets up a Linux virtual machine on top of Vagrant and
-VirtualBox. It has various software packages installed and can be used
-for your development work.
+This project sets up a Linux virtual machine on top of Vagrant and VirtualBox. It has various software packages 
+installed and can be used for your development work.
 
 ## Getting Started
 
@@ -99,3 +98,4 @@ Hat tip to anyone whose code was used
 * Docker role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/docker)
 * NodeJS role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/nodejs)
 * R role adapted from [Oefenweb](https://galaxy.ansible.com/oefenweb/r)
+* RStudio Server role adapted from [Oefenweb](https://galaxy.ansible.com/oefenweb/rstudio_server)
