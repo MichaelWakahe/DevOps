@@ -1,14 +1,14 @@
 ---
-postgresql_version: 9.6
+postgresql_version: 10
 
 # Enable postgis
 postgresql_ext_install_postgis: yes
-postgresql_ext_postgis_version: "2.4" 
+postgresql_ext_postgis_version: "2.4"
 
 postgresql_users:
   - name: baz
     pass: pass
-    encrypted: no       # denotes if the password is already encrypted.
+    encrypted: yes       # denotes if the password is to be encrypted.
 
 postgresql_user_privileges:
   - name: baz                   # user name

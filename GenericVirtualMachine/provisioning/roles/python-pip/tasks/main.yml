@@ -10,4 +10,5 @@
     version: "{{ item.version | default(omit) }}"
     virtualenv: "{{ item.virtualenv | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
+    executable: pip3
   with_items: "{{ pip_install_packages }}"
