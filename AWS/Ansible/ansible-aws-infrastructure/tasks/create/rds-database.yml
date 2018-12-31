@@ -1,12 +1,52 @@
 ---
-- name: Create Database Subnet Group
-  rds_subnet_group:
-    state: present
-    name: "{{ project }}-{{ system_role }}"
-    description: "Database for {{ project }}"
-    region: "{{ region }}"
-    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
-
+#- name: Create Database Subnet Group
+#  rds_subnet_group:
+#    state: present
+#    name: "{{ project }}-{{ system_role }}"
+#    description: "Database for {{ project }}"
+#    region: "{{ region }}"
+#    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
+#
+#
+#- name: Create Database Servers
+#  rds:
+#
+#    command: create
+#
+#    region: "{{ region }}"
+#    multi_zone: "{% if region == 'us-west-2' or region == 'us-east-1' %}yes{% else %}no{% endif %}"
+#
+#    instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
+#    instance_type: "db.{{ instance_type[system_role] }}"
+#
+#    vpc_security_groups: "{{ security_group_id[system_role] }}"
+#    subnet: "{{ project }}-{{ system_role }}"
+#
+#    db_engine: "{{ rds_engine }}"
+#    upgrade: yes
+#
+#    port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'MySQL' %}3306{% endif %}"
+#    db_name: "{{ rds_database_name }}"
+#    username: "{{ rds_database_username }}"
+#    password: "{{ rds_database_password  | mandatory }}"
+#
+#    backup_retention: "{{ rds_database_backup_retention }}"
+#    size: "{{ rds_database_size }}"
+#    wait: yes
+#    wait_timeout: 1500
+#  register: rds_instance_data
+#
+#- name: "Route53 Record | Public Interface | {{ system_role }}"
+#  route53:
+#    command: create
+#    overwrite: yes
+#    zone: "{{ domain }}"
+#    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+#    type: CNAME
+#    value: "{{ rds_instance_data.instance.endpoint }}"
+#    ttl: 300
+#  tags:
+#    - dns
 
 - name: Create Database Servers
   rds:
@@ -34,17 +74,3 @@
     size: "{{ rds_database_size }}"
     wait: yes
     wait_timeout: 1500
-  register: rds_instance_data
-
-- name: "Route53 Record | Public Interface | {{ system_role }}"
-  route53:
-    command: create
-    overwrite: yes
-    zone: "{{ domain }}"
-    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
-    type: CNAME
-    value: "{{ rds_instance_data.instance.endpoint }}"
-    ttl: 300
-  tags:
-    - dns
-

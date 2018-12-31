@@ -1,6 +1,6 @@
 ---
 subnets: "{{ subnets_all | rejectattr('az', 'equalto', region + 'c') | list }}"
-preferred_availability_zone: d
+preferred_availability_zone: a
 availability_zones:
   - us-east-1a
   - us-east-1b
