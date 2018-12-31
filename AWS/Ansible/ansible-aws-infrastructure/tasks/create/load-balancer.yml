@@ -1,0 +1,42 @@
+---
+- name: Check ELB name length
+  debug:
+    msg: "ELB name '{{ project }}-{{ system_role }}' is greater then 32 characters"
+  failed_when: "{{ ((project + '-' + system_role) | length) > 32 }}"
+
+- name: "Load Balancer | {{ system_role }}"
+  ec2_elb_lb:
+    state: present
+    region: "{{ region }}"
+    name: "{{ project }}-{{ system_role }}"
+    security_group_ids: "{% for security_group in load_balancer[system_role].security_groups %}{{ security_group_id[security_group] }}{% if not loop.last %},{% endif %}{% endfor %}"
+    listeners: "{{ load_balancer[system_role].listeners }}"
+    scheme: "{{ load_balancer[system_role].scheme }}"
+    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
+    cross_az_load_balancing: yes
+    health_check:
+      ping_protocol: "{{ health_check_protocol }}"
+      ping_port: "{{ health_check_ping_port }}"
+      ping_path: "{{ health_check_ping_path }}"
+      response_timeout: "{{ health_check_response_timeout }}"
+      interval: "{{ health_check_interval }}"
+      unhealthy_threshold: "{{ health_check_unhealthy_threshold }}"
+      healthy_threshold: "{{ health_check_healthy_threshold }}"
+  register: balancer
+
+- name: "Capture Load Balancer Name | {{ system_role }}"
+  set_fact:
+    load_balancer_name: "{{ load_balancer_name.update({system_role: balancer.elb.name}) }}{{ load_balancer_name }}"
+
+- name: "Route53 Record | {{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ balancer.elb.dns_name }}"
+    ttl: 300
+  when: dns_points_to_load_balancer
+  tags:
+    - dns

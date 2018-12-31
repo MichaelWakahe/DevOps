@@ -1,0 +1,151 @@
+---
+- name: Identify Base Image
+  ec2_ami_find:
+    architecture: x86_64
+    region: "{{ region }}"
+    virtualization_type: "{{ 'paravirtual' if instance_type[system_role] in instance_type_requires_paravirtualization else virtualization_type }}"
+    name: "{{ ec2_ami_name }}"
+    owner: "{{ ec2_ami_owner }}"
+    sort: name
+    sort_order: descending
+    sort_end: 1
+  register: base_image
+
+- name: "Place Spot Request for EC2 Instance | {{ system_role }}"
+  ec2:
+    region: "{{ region }}"
+    zone: "{{ region }}{{ preferred_availability_zone }}"
+
+    key_name: "{{ bootstrap_key | default(omit) }}"
+
+    group_id: "{{ security_group_id['managed'] }},{{ security_group_id[system_role] }}"
+
+    instance_tags:
+      Project:     "{{ project }}"
+      Environment: "{{ environment_tier }}"
+      Role:        "{{ system_role }}"
+      Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
+      ForgeRegion: "{{ forge_region }}"
+      ForgeBucket: "{{ forge_bucket }}"
+      AmazonInspectorScan: "{{ amazon_inspector_scan }}"
+
+    image: "{{ base_image.results[0].ami_id }}"
+    instance_type: "{{ instance_type[system_role] }}"
+    exact_count: 1
+    count_tag:
+      Project:     "{{ project }}"
+      Environment: "{{ environment_tier }}"
+      Role:        "{{ system_role }}"
+      Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
+
+    volumes:
+      - device_name: /dev/sda1
+        device_type: gp2
+        delete_on_termination: yes
+        volume_size: "{{ override_root_volume_size[system_role] if system_role in override_root_volume_size else root_volume_size }}"
+
+    spot_price: "{{ instance_bid[instance_type[system_role]] if environment_tier in use_spot_instances_in_environments or system_role in always_use_spot_instance_for_roles else None }}"
+    wait: yes
+
+    vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
+    assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
+
+    instance_profile_name: autonomous
+    user_data: "{{ forge_userdata | b64decode }}"
+  register: instance
+
+- name: "Capture Instance ID | {{ system_role }}"
+  set_fact:
+    instances: "{{ instances.update({system_role: instance.tagged_instances[0].id}) }}{{ instances }}"
+
+- name: Assign Elastic IP
+  ec2_eip:
+    state: present
+    in_vpc: yes
+    region: "{{ region }}"
+    device_id: "{{ instances[system_role] }}"
+    release_on_disassociation: yes
+    public_ip: "{{ static_ip[system_role] }}"
+  when: static_ip is defined and static_ip[system_role] is defined
+  tags:
+    - elastic-ip
+
+- name: "Route53 Record | Public Interface | {{ system_role }}"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}{% if load_balancers_enabled and dns_points_to_load_balancer and system_role in load_balancer %}-direct{% endif %}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ item.public_dns_name }}"
+    ttl: 300
+  with_items: '{{instance.tagged_instances}}'
+  tags:
+    - dns
+
+- name: "Route53 Record | Private Interface | {{ system_role }}"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}-internal.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ item.private_dns_name }}"
+    ttl: 300
+  with_items: '{{instance.tagged_instances}}'
+  tags:
+    - dns
+
+- name: "Assign Elastic IP | DNS Load Balancing | {{ system_role }}"
+  ec2_eip:
+    state: present
+    in_vpc: yes
+    region: "{{ region }}"
+    device_id: "{{ instances[system_role] }}"
+    release_on_disassociation: yes
+  register: eip
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and instance.public_ip is not defined
+  tags:
+    - elastic-ip
+
+- name: Route53 Record | DNS Load Balancing | Assign Alias Record (West)
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project | replace('-west', '') }}-{{ environment_tier }}.{{ domain }}"
+    type: A
+    region: "{{ region }}"
+    identifier: "{{ project }}"
+    value: "{{ eip.public_ip }}"
+    ttl: 300
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and (region == 'us-west-1' or region == 'us-west-2')
+  tags:
+    - dns
+
+- name: Route53 Record | DNS Load Balancing | Assign Alias Record (East)
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project | replace('-east', '') }}-{{ environment_tier }}.{{ domain }}"
+    type: A
+    region: "{{ region }}"
+    identifier: "{{ project }}"
+    value: "{{ eip.public_ip }}"
+    ttl: 300
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and region == 'us-east-1'
+  tags:
+    - dns
+
+- name: Assign Instance to Load Balancer
+  ec2_elb:
+    state: present
+    region: "{{ region }}"
+    ec2_elbs: "{{ project }}-{{ system_role }}"
+    instance_id: "{{ instances[system_role] }}"
+    wait: no
+  when: load_balancers_enabled and dns_points_to_load_balancer and system_role in load_balancer
+
+# - add_host: name={{ item.public_dns_name }} groups=common,{{ system_role }}
+#   with_items: '{{instance.tagged_instances}}'

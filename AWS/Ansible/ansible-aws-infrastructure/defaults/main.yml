@@ -1,0 +1,248 @@
+---
+autodeploy_passthrough_enabled: no
+autoscale: no
+
+elb_ssl_offload: no
+elb_ssl_certificate_name: 'self-signed'
+
+load_balance_prototypes: no
+load_balancers_enabled: no
+dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
+
+dns_load_balancing_enabled: no
+dns_load_balanced_roles:
+  - application
+
+root_volume_size: 10
+subnet_prefix: '10.0'
+
+using_rds: no
+# [postgres, MySQL]
+rds_engine: MySQL
+rds_database_name: "{{ project | replace('-', '') }}"
+rds_database_username: "{{ project | replace('-', '') }}"
+rds_database_password: "{{ mandatory }}"
+rds_database_size: 10 # GB
+rds_database_backup_retention: 30
+
+using_elasticache: no
+# [memcached, redis]
+elasticache_engine: redis
+elasticache_name: "{{ project }}-{{ environment_tier }}"
+
+fallback_server_type: no
+forge_region: eu-central-1
+forge_bucket: telusdigital-forge
+forge_userdata: I2Nsb3VkLWNvbmZpZw0KcmVwb191cGRhdGU6IHRydWUNCnJlcG9fdXBncmFkZTogYWxsDQoNCnBhY2thZ2VzOg0KIC0gcHl0aG9uLWRldg0KIC0gcHl0aG9uLXBpcA0KIC0gZ2l0DQogLSBsaWJmZmktZGV2DQogLSBsaWJzc2wtZGV2DQpydW5jbWQ6DQogLSBjdXJsIGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS90ZWx1c2RpZ2l0YWwvZm9yZ2UvbWFzdGVyL2Jvb3RzdHJhcC5weSB8IHB5dGhvbg0K
+amazon_inspector_scan: yes
+
+virtualization_type: hvm
+
+health_check_response_timeout: "{% if autoscale %}2{% else %}5{% endif %}"
+health_check_interval: "{% if autoscale %}5{% else %}30{% endif %}"
+health_check_unhealthy_threshold: 2
+health_check_healthy_threshold: 10
+health_check_ping_port: 80
+health_check_protocol: http
+health_check_ping_path: "/"
+
+always_use_spot_instance_for_roles:
+  - aggregator
+  - logs
+  - client
+  - master
+  - metrics
+  - build
+  - preview
+
+autoscale_roles:
+  - inbound
+  - application
+  - applicationapi
+  - applicationq
+  - database
+  - database1
+  - database2
+  - database3
+  - cache
+  - outbound
+  - aggregator
+  - build
+  - preview
+  - logs
+  - metrics
+
+autoscale_min:
+  inbound: 3
+  application: 3
+  applicationapi: 3
+  applicationq: 3
+  database: 3
+  database1: 3
+  database2: 3
+  database3: 3
+  cache: 3
+  outbound: 3
+  aggregator: 3
+  build: 3
+  preview: 3
+  logs: 3
+  metrics: 3
+autoscale_max:
+  inbound: 9
+  application: 9
+  applicationapi: 9
+  applicationq: 9
+  database: 9
+  database1: 9
+  database2: 9
+  database3: 9
+  cache: 9
+  outbound: 9
+  aggregator: 9
+  build: 9
+  preview: 9
+  logs: 9
+  metrics: 9
+autoscale_desire:
+  inbound: 3
+  application: 3
+  applicationapi: 3
+  applicationq: 3
+  database: 3
+  database1: 3
+  database2: 3
+  database3: 3
+  cache: 3
+  outbound: 3
+  aggregator: 3
+  build: 3
+  preview: 3
+  logs: 3
+  metrics: 3
+
+default_instance_type:
+  management: m3.medium
+  inbound: c3.large
+  application: m3.medium
+  applicationapi: m3.medium
+  applicationq: m3.medium
+  cache: m3.medium
+  database: m3.medium
+  database1: m3.medium
+  database2: m3.medium
+  database3: m3.medium
+  outbound: m3.medium
+  aggregator: m3.medium
+  build: m3.medium
+  preview: m3.medium
+  logs: r3.large
+  client: m3.medium
+  master: m1.small
+  metrics: r3.large
+
+fallback_instance_type:
+  management: t1.micro
+  inbound: m1.small
+  application: c1.medium
+  cache: m1.small
+  database: m1.medium
+  outbound: m1.small
+  aggregator: m1.small
+  build: m1.small
+  preview: m1.small
+  logs: hi1.4xlarge
+  client: c1.medium
+  master: t1.micro
+  metrics: hi1.4xlarge
+
+use_spot_instances_in_environments:
+  - next
+  - development
+  - staging
+
+default_instance_bid:
+  c1.medium: 0.130
+  c1.xlarge: 0.520
+  c3.2xlarge: 0.420
+  c3.4xlarge: 0.840
+  c3.8xlarge: 1.680
+  c3.large: 0.105
+  c3.xlarge: 0.210
+  c4.2xlarge: 0.464
+  c4.4xlarge: 0.928
+  c4.8xlarge: 1.856
+  c4.large: 0.116
+  c4.xlarge: 0.232
+  cc2.8xlarge: 2.00
+  cg1.4xlarge: 2.10
+  cr1.8xlarge: 3.50
+  g2.2xlarge: 0.650
+  hi1.4xlarge: 3.100
+  hs1.8xlarge: 4.600
+  i2.2xlarge: 1.705
+  i2.4xlarge: 3.410
+  i2.8xlarge: 6.820
+  i2.xlarge: 0.853
+  m1.large: 0.175
+  m1.medium: 0.087
+  m1.small: 0.044
+  m1.xlarge: 0.350
+  m2.2xlarge: 0.490
+  m2.4xlarge: 0.980
+  m2.xlarge: 0.245
+  m3.2xlarge: 0.560
+  m3.large: 0.140
+  m3.medium: 0.070
+  m3.xlarge: 0.280
+  r3.2xlarge: 0.700
+  r3.4xlarge: 1.400
+  r3.8xlarge: 2.800
+  r3.large: 0.175
+  r3.xlarge: 0.350
+  t1.micro: 0.020
+  t2.medium: 0.052
+  t2.micro: 0.013
+  t2.small: 0.026
+
+instance_type_requires_paravirtualization:
+  - c1.medium
+  - c1.xlarge
+  - m1.large
+  - m1.medium
+  - m1.small
+  - m1.xlarge
+  - m2.2xlarge
+  - m2.4xlarge
+  - m2.xlarge
+  - t1.micro
+
+override_instance_type: {}
+override_instance_bid: {}
+override_root_volume_size: {}
+override_region: ''
+
+default_server_types:             # Values in roles/meta/infrastructure/vars/infrastrucutre/load-balancers.yml
+  application: webserver
+  applicationapi: webserver
+  applicationq: webserver
+  database: mysql
+  database1: mysql
+  database2: mysql
+  database3: mysql
+  outbound: squid
+override_server_types: {}
+server_types: "{{ default_server_types.update(override_server_types) }}{% if fallback_server_type %}{{ default_server_types.update(fallback_instance_types) }}{% endif %}{{ default_server_types }}"
+roles_needing_public_ip:
+  - outbound
+  - inbound
+  - application
+
+vpc_peering_enabled: no
+vpc_peering_from: "{{ project }}"
+vpc_peering_to: []
+
+open_to_internal_traffic_roles: []
+
+ec2_ami_name: "telus-base-ami*"
+ec2_ami_owner: "self"
