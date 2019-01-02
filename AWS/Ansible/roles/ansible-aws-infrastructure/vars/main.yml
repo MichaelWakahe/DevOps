@@ -1,0 +1,10 @@
+project: test
+
+using_rds: yes
+rds_engine: aurora
+rds_database_name: "{{ project | replace('-', '') }}"
+rds_database_username: "{{ project | replace('-', '') }}"
+rds_database_password: "{{ mandatory }}"
+rds_database_size: 10 # GB
+rds_database_backup_retention: 1
+
