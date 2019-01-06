@@ -19,9 +19,8 @@
     - {role: aws-cli, tags: [aws_cli]}
     - {role: postgresql, tags: [database], become: true}
     - {role: java, tags: [java], become: true}
-#    - {role: redis, tags: [redis], become: true}
-#    - {role: setup, tags: [database], become: true}
-#    - {role: rabbitmq, tags: [rabbitmq]}
+    - {role: redis, tags: [redis], become: true}
+    - {role: rabbitmq, tags: [rabbitmq]}
 #    - {role: docker}
 #    - {role: nodejs}
 #    - {role: R}

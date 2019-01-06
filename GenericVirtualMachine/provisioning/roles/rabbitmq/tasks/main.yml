@@ -1,33 +1,46 @@
 ---
-- name: install apt-transport-https
-  apt:
-    pkg: "{{item}}"
-    update-cache: yes
-    cache_valid_time: 86400
-  with_items:
-    - apt-transport-https
-    - python-pycurl
+#- name: install apt-transport-https
+#  apt:
+#    pkg: "{{item}}"
+#    update-cache: yes
+#    cache_valid_time: 86400
+#  with_items:
+#    - apt-transport-https
+#    - python-pycurl
+#
+#- name: add the official rabbitmq repository's key
+#  apt_key:
+#    url: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
+#    state: present
+#
+#- name: add rabbitmq repository
+#  apt_repository:
+#    repo: "deb http://www.rabbitmq.com/debian/ testing main"
+#    state: present
+#  register: rabbitmq_added
+#
+#- name: apt update cache
+#  apt:
+#    update_cache: yes
+#  when: rabbitmq_added.changed
+#
+#- name: install rabbitmq
+#  apt:
+#    pkg: rabbitmq-server
+#    state: present
 
-- name: add the official rabbitmq repository's key
-  apt_key:
-    url: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
-    state: present
+# Setup/install tasks.
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: add rabbitmq repository
-  apt_repository:
-    repo: "deb http://www.rabbitmq.com/debian/ testing main"
-    state: present
-  register: rabbitmq_added
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
 
-- name: apt update cache
-  apt:
-    update_cache: yes
-  when: rabbitmq_added.changed
-
-- name: install rabbitmq
-  apt:
-    pkg: rabbitmq-server
-    state: present
+- name: Ensure rabbitmq is started and enabled (if configured).
+  service:
+    name: "{{ rabbitmq_daemon }}"
+    state: "{{ rabbitmq_state }}"
+    enabled: "{{ rabbitmq_enabled }}"
 
 - name: enable rabbitmq service
   service:
