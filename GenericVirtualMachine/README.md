@@ -99,3 +99,4 @@ Hat tip to anyone whose code was used
 * NodeJS role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/nodejs)
 * R role adapted from [Oefenweb](https://galaxy.ansible.com/oefenweb/r)
 * RStudio Server role adapted from [Oefenweb](https://galaxy.ansible.com/oefenweb/rstudio_server)
+* Java role adapted from [Geerling Guy](https://galaxy.ansible.com/geerlingguy/java)
