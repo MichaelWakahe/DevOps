@@ -21,7 +21,7 @@
     - {role: java, tags: [java], become: true}
     - {role: redis, tags: [redis], become: true}
     - {role: rabbitmq, tags: [rabbitmq]}
-#    - {role: docker}
+    - {role: docker, tags: [docker]}
 #    - {role: nodejs}
 #    - {role: R}
 #    - {role: RStudio-server}

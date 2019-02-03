@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     # ansible.verbose = "v"
     ansible.playbook = "provisioning/site.yml"
     ansible.become = true
-    ansible.tags = "rabbitmq"
+    ansible.tags = "docker"
   end
 
 end
