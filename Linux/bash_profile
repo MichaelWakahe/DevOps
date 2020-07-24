@@ -1,11 +1,13 @@
 #.bash_profile
 
+# To reload it after making changes: `source ~/.bash_profile`
+
 #-------------------------------------------------------------
 # Get the aliases and functions
 #-------------------------------------------------------------
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
-if
+fi
 
 
 #-------------------------------------------------------------
