@@ -1,0 +1,8 @@
+# This allows you to autocomplete commands from your history by using the arrow keys.
+# Save it as .inputrc in your home folder.
+# To apply changes immediately (reload it in the current shell), type: bind -f  ~/.inputrc
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set show-all-if-ambiguous on
+set completion-ignore-case on
