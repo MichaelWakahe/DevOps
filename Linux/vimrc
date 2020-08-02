@@ -1,0 +1,5 @@
+" vim settings
+" This should be saved as .vimrc in your home directory.
+
+" enable absolute line numbering
+set nu
