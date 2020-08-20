@@ -1,0 +1,2 @@
+# This makes your SSH connections persist
+ServerAliveInterval 60
