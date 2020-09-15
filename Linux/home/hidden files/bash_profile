@@ -16,21 +16,17 @@ fi
 export JAVA_HOME=$HOME/Programs/Java/jdk-11.0.7
 export PATH=${JAVA_HOME}/bin:$PATH
 
-export ANDROID_HOME=/opt/android-sdk-linux
-export PATH=${ANDROID_HOME}/tools:$PATH
-export PATH=${ANDROID_HOME}/platform-tools:$PATH
-
-export JBOSS_HOME=/opt/Programs/WildFly/8.0.0
-
-export ANT_HOME=/opt/Programs/ant/1.9.7
-export PATH=${ANT_HOME}/bin:$PATH
-
 export MAVEN_HOME=$HOME/Programs/maven/3.3.9
 export PATH=${MAVEN_HOME}/bin:$PATH
 
 export GRADLE_HOME=/opt/Programs/gradle/3.4.1
 export PATH=${GRADLE_HOME}/bin:$PATH
 
+export ANDROID_HOME=/opt/android-sdk-linux
+export PATH=${ANDROID_HOME}/tools:$PATH
+export PATH=${ANDROID_HOME}/platform-tools:$PATH
+
+# Servlet containers
 export JBOSS_HOME=/opt/Programs/WildFly/10
 
 export CATALINA_HOME=/opt/Programs/Tomcat/8.5.6
@@ -48,7 +44,7 @@ export PATH=${SBT_HOME}/bin:$PATH
 
 
 #-------------------------------------------------------------
-# NodeJS Development
+# Javascript Development
 #-------------------------------------------------------------
 export NODE_HOME=$HOME/Programs/NodeJS/node-v14.2.0-linux-x64
 export PATH=${NODE_HOME}/bin:$PATH
