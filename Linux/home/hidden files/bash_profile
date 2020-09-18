@@ -60,3 +60,4 @@ export PATH=$PATH:/usr/local/go/bin
 # Other
 #-------------------------------------------------------------
 export PATH=$PATH:/sbin
+export PATH=$PATH:/usr/local/bin
