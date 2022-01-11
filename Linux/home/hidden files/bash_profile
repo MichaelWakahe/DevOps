@@ -60,7 +60,8 @@ export PATH=$PATH:/usr/local/go/bin
 # Microsoft Developer Tools
 #-------------------------------------------------------------
 # .NET 6
-export PATH=$PATH:${HOME}/Programs/Dotnet/dotnet-sdk-6.0.101-linux-x64
+export DOTNET_ROOT=${HOME}/Programs/Dotnet/dotnet-sdk-6.0.101-linux-x64
+export PATH=$PATH:$DOTNET_ROOT
 
 
 # Microsoft SQL Server
