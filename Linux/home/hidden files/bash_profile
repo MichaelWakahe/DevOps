@@ -73,6 +73,10 @@ export PATH=$PATH:/opt/mssql-tools/bin
 #-------------------------------------------------------------
 DOCKER_CONFIG=$HOME/.docker
 
+# Install Docker Compose v2 in the folder below according to:
+# https://docs.docker.com/compose/cli-command/#install-on-linux
+export PATH=$PATH:$DOCKER_CONFIG/cli-plugins
+
 
 #-------------------------------------------------------------
 # Other
