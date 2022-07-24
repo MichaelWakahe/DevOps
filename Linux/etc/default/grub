@@ -1,0 +1,3 @@
+# This setting can come in handy in Ubuntu 20.04 (LTS) when the display is stuck at 640x480.
+# After editing with the change below, run `sudo update-grub` then reboot the computer.
+GRUB_GFXMODE=1920x1080
