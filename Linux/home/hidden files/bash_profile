@@ -83,3 +83,4 @@ export PATH=$PATH:$DOCKER_CONFIG/cli-plugins
 #-------------------------------------------------------------
 export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:$HOME/.local/bin
