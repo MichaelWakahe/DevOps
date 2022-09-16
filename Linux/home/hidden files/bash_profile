@@ -1,5 +1,13 @@
 #.bash_profile
 
+# ~/.bash_profile is only sourced by bash when started in login mode. That is typically when you log in at the console
+# (Ctrl+Alt+F1..F6), connect via ssh, or use sudo -i or su - to run commands as another user.
+
+# When you log in graphically, ~/.profile will be specifically sourced by the script that launches gnome-session
+# (or whichever desktop environment you're using). So ~/.bash_profile is not sourced at all when you log in graphically.
+
+# You can append the contents of this file to your .profile.
+
 # To reload it after making changes: `source ~/.bash_profile`
 
 #-------------------------------------------------------------
@@ -46,7 +54,7 @@ export PATH=${SBT_HOME}/bin:$PATH
 #-------------------------------------------------------------
 # Javascript Development
 #-------------------------------------------------------------
-export NODE_HOME=$HOME/Programs/NodeJS/node-v14.2.0-linux-x64
+export NODE_HOME=$HOME/Programs/NodeJS/node-v16.17.0-linux-x64
 export PATH=${NODE_HOME}/bin:$PATH
 
 
