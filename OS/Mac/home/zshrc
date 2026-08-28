@@ -1,0 +1,14 @@
+# Save this file as .zshrc in /Users/<your username>/
+
+# Template to set PATH
+# export PATH="/path/to/directory:$PATH"
+
+# Sublime
+export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+
+# Python, Jupyter Lab
+export PATH="/Users/michael/Library/Python/3.9/bin:$PATH"
+
+# Add Visual Studio Code (code)
+export PATH="/bin:$PATH"
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
