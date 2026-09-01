@@ -1,15 +1,32 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
--- ─── GLOBAL SETTINGS ───
+-- FORCE DIRECT3D BACKEND ON WINDOWS
+-- Bypasses legacy OpenGL implementations to prevent glium window creation errors
+config.prefer_egl = true
+
+-- AUTOMATIC RENDERING FALLBACK
+-- Check if any hardware graphics cards are available. If not, use CPU software rendering.
+local has_gpu = false
+for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
+    if gpu.device_type == 'IntegratedGpu' or gpu.device_type == 'DiscreteGpu' then
+        has_gpu = true
+        break
+    end
+end
+
+if not has_gpu then
+    config.front_end = "Software"
+end
+
+-- GLOBAL SETTINGS
 config.color_scheme = 'Tokyo Night'
 config.font = wezterm.font('JetBrains Mono')
 
--- ─── OPACITY & TRANSPARENCY SETTINGS ───
--- Sets a slight 85% opacity globally across all operating systems
+-- OPACITY AND TRANSPARENCY SETTINGS
 config.window_background_opacity = 0.85
 
--- ─── PLATFORM-SPECIFIC SETTINGS ───
+-- PLATFORM-SPECIFIC SETTINGS
 if wezterm.target_triple:find("windows") then
     -- Windows specific settings
     config.default_prog = { 'C:/Program Files/Git/bin/bash.exe', '--login', '-i' }
@@ -32,7 +49,7 @@ else
     config.wayland_window_background_blur = true
 end
 
--- ─── CUSTOM KEYBINDINGS ───
+-- CUSTOM KEYBINDINGS
 config.keys = {
   -- Split horizontally (Top/Bottom stacked rows)
   {
@@ -54,7 +71,7 @@ config.keys = {
   },
 }
 
--- ─── CUSTOM MOUSE BINDINGS ───
+-- CUSTOM MOUSE BINDINGS
 config.mouse_bindings = {
   -- Right-click to paste text from the system clipboard
   {
