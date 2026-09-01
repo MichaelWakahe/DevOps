@@ -6,7 +6,7 @@ config.color_scheme = 'Tokyo Night'
 config.font = wezterm.font('JetBrains Mono')
 
 -- ─── OPACITY & TRANSPARENCY SETTINGS ───
--- Sets a slight 90% opacity globally across all operating systems
+-- Sets a slight 85% opacity globally across all operating systems
 config.window_background_opacity = 0.85
 
 -- ─── PLATFORM-SPECIFIC SETTINGS ───
@@ -32,7 +32,7 @@ else
     config.wayland_window_background_blur = true
 end
 
--- ─── CUSTOM KEYBINDINGS FOR SPLITS ───
+-- ─── CUSTOM KEYBINDINGS ───
 config.keys = {
   -- Split horizontally (Top/Bottom stacked rows)
   {
@@ -45,6 +45,22 @@ config.keys = {
     key = 'V',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  -- PowerShell-style Paste with SHIFT + V
+  {
+    key = 'V',
+    mods = 'SHIFT',
+    action = wezterm.action.PasteFrom 'Clipboard',
+  },
+}
+
+-- ─── CUSTOM MOUSE BINDINGS ───
+config.mouse_bindings = {
+  -- Right-click to paste text from the system clipboard
+  {
+    event = { Down = { streak = 1, button = 'Right' } },
+    mods = 'NONE',
+    action = wezterm.action.PasteFrom 'Clipboard',
   },
 }
 
