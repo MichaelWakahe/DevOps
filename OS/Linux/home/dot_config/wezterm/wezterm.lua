@@ -32,4 +32,20 @@ else
     config.wayland_window_background_blur = true
 end
 
+-- ─── CUSTOM KEYBINDINGS FOR SPLITS ───
+config.keys = {
+  -- Split horizontally (Top/Bottom stacked rows)
+  {
+    key = 'H',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  -- Split vertically (Left/Right side-by-side columns)
+  {
+    key = 'V',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+}
+
 return config
