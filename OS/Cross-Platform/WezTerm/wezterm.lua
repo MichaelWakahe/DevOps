@@ -30,6 +30,7 @@ config.window_background_opacity = 0.85
 if wezterm.target_triple:find("windows") then
     -- Windows specific settings
     config.default_prog = { 'C:/Program Files/Git/bin/bash.exe', '--login', '-i' }
+    config.allow_win32_input_mode = true
 
     -- Frosted glass effect for Windows 11 (Options: 'Mica', 'Acrylic', or 'Tabbed')
     config.win32_system_backdrop = 'Acrylic'
