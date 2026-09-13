@@ -90,12 +90,12 @@ Windows startup tasks.
 **These are separate input editors.** PSReadLine bindings affect the PowerShell prompt, not the interactive Copilot
 prompt. Starting Copilot from PowerShell does not make Copilot use PSReadLine.
 
-The earlier Shift+Enter-to-Ctrl+O workaround has been removed from the shared config: Copilot uses Ctrl+O to toggle its
-timeline, not insert a newline. If you merged this config with an older copy, remove that old Shift+Enter entry from
-`config.keys`. The Windows configuration permits native Win32 keyboard input instead.
+The shared config maps Shift+Enter to the `ESC` followed by `CR` sequence that Copilot CLI recognizes as multiline
+input. This is not the earlier Ctrl+O workaround: Copilot uses Ctrl+O to toggle its timeline, so do not map Shift+Enter
+to Ctrl+O.
 
-At the Copilot prompt, use Shift+Enter for a newline. If it still submits instead, run `/terminal-setup` inside Copilot
-and follow its terminal-specific guidance. Review any proposed active configuration changes before applying them.
+After activating or reloading the shared config, open a new tab and use Shift+Enter for a newline at the Copilot prompt.
+Copilot's `/terminal-setup` command does not configure WezTerm, so the shared key binding supplies the required sequence.
 
 ### Optional PowerShell prompt bindings
 

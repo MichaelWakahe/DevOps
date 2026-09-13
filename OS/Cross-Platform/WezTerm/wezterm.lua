@@ -52,6 +52,12 @@ end
 
 -- CUSTOM KEYBINDINGS
 config.keys = {
+  -- Send Copilot CLI's multiline sequence instead of submitting the prompt
+  {
+    key = 'Enter',
+    mods = 'SHIFT',
+    action = wezterm.action.SendString '\x1b\r',
+  },
   -- Split horizontally (Top/Bottom stacked rows)
   {
     key = 'H',
