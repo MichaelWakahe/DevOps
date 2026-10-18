@@ -1,0 +1,91 @@
+# Shared environment for POSIX-compatible shells.
+#
+# Keep this file free of interactive shell configuration. It is sourced by
+# .profile, .bashrc, and .zshrc, so every operation must be safe to repeat.
+
+export EDITOR=vim
+export VISUAL="$EDITOR"
+
+path_prepend() {
+    [ -d "$1" ] || return 0
+    case ":${PATH-}:" in
+        *":$1:"*) ;;
+        *) PATH="$1${PATH:+:$PATH}" ;;
+    esac
+}
+
+path_append() {
+    [ -d "$1" ] || return 0
+    case ":${PATH-}:" in
+        *":$1:"*) ;;
+        *) PATH="${PATH:+$PATH:}$1" ;;
+    esac
+}
+
+# Guarded legacy development paths. Update these paths to match locally
+# installed versions rather than installing the versions shown here.
+if [ -d "$HOME/Programs/Java/jdk-11.0.7" ]; then
+    export JAVA_HOME="$HOME/Programs/Java/jdk-11.0.7"
+    path_prepend "$JAVA_HOME/bin"
+fi
+
+if [ -d "$HOME/Programs/maven/3.3.9" ]; then
+    export MAVEN_HOME="$HOME/Programs/maven/3.3.9"
+    path_prepend "$MAVEN_HOME/bin"
+fi
+
+if [ -d "/opt/Programs/gradle/3.4.1" ]; then
+    export GRADLE_HOME="/opt/Programs/gradle/3.4.1"
+    path_prepend "$GRADLE_HOME/bin"
+fi
+
+if [ -d "/opt/android-sdk-linux" ]; then
+    export ANDROID_HOME="/opt/android-sdk-linux"
+    path_prepend "$ANDROID_HOME/tools"
+    path_prepend "$ANDROID_HOME/platform-tools"
+fi
+
+if [ -d "/opt/Programs/WildFly/10" ]; then
+    export JBOSS_HOME="/opt/Programs/WildFly/10"
+fi
+
+if [ -d "/opt/Programs/Tomcat/8.5.6" ]; then
+    export CATALINA_HOME="/opt/Programs/Tomcat/8.5.6"
+    path_prepend "$CATALINA_HOME/bin"
+fi
+
+if [ -d "$HOME/Programs/scala/2.12.3" ]; then
+    export SCALA_HOME="$HOME/Programs/scala/2.12.3"
+    path_prepend "$SCALA_HOME/bin"
+fi
+
+if [ -d "$HOME/Programs/sbt/0.13.16" ]; then
+    export SBT_HOME="$HOME/Programs/sbt/0.13.16"
+    path_prepend "$SBT_HOME/bin"
+fi
+
+if [ -d "$HOME/Programs/NodeJS/node-v16.17.0-linux-x64" ]; then
+    export NODE_HOME="$HOME/Programs/NodeJS/node-v16.17.0-linux-x64"
+    path_prepend "$NODE_HOME/bin"
+fi
+
+path_append "/usr/local/go/bin"
+
+if [ -d "$HOME/Programs/Dotnet/dotnet-sdk-6.0.101-linux-x64" ]; then
+    export DOTNET_ROOT="$HOME/Programs/Dotnet/dotnet-sdk-6.0.101-linux-x64"
+    path_append "$DOTNET_ROOT"
+fi
+
+path_append "/opt/mssql-tools/bin"
+
+if [ -d "$HOME/.docker" ]; then
+    export DOCKER_CONFIG="$HOME/.docker"
+    path_append "$DOCKER_CONFIG/cli-plugins"
+fi
+
+path_append "/sbin"
+path_append "/usr/local/bin"
+path_append "$HOME/.local/bin"
+
+export PATH
+unset -f path_prepend path_append 2>/dev/null || true

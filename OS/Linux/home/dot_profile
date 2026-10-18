@@ -1,0 +1,5 @@
+# Shared login-shell environment.
+
+if [ -r "$HOME/.shell_env" ]; then
+    . "$HOME/.shell_env"
+fi

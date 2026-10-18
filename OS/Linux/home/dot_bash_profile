@@ -1,94 +1,11 @@
-#.bash_profile
+# Bash login-shell configuration.
 
-# ~/.bash_profile is only sourced by bash when started in login mode. That is typically when you log in at the console
-# (Ctrl+Alt+F1..F6), connect via ssh, or use sudo -i or su - to run commands as another user.
-
-# When you log in graphically, ~/.profile will be specifically sourced by the script that launches gnome-session
-# (or whichever desktop environment you're using). So ~/.bash_profile is not sourced at all when you log in graphically.
-
-# You can append the contents of this file to your .profile.
-
-# To reload it after making changes: `source ~/.bash_profile`
-
-#-------------------------------------------------------------
-# Get the aliases and functions
-#-------------------------------------------------------------
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+if [ -r "$HOME/.profile" ]; then
+    . "$HOME/.profile"
+elif [ -r "$HOME/.shell_env" ]; then
+    . "$HOME/.shell_env"
 fi
 
-
-#-------------------------------------------------------------
-# Java Development
-#-------------------------------------------------------------
-export JAVA_HOME=$HOME/Programs/Java/jdk-11.0.7
-export PATH=${JAVA_HOME}/bin:$PATH
-
-export MAVEN_HOME=$HOME/Programs/maven/3.3.9
-export PATH=${MAVEN_HOME}/bin:$PATH
-
-export GRADLE_HOME=/opt/Programs/gradle/3.4.1
-export PATH=${GRADLE_HOME}/bin:$PATH
-
-export ANDROID_HOME=/opt/android-sdk-linux
-export PATH=${ANDROID_HOME}/tools:$PATH
-export PATH=${ANDROID_HOME}/platform-tools:$PATH
-
-# Servlet containers
-export JBOSS_HOME=/opt/Programs/WildFly/10
-
-export CATALINA_HOME=/opt/Programs/Tomcat/8.5.6
-export PATH=${CATALINA_HOME}/bin:$PATH
-
-
-#-------------------------------------------------------------
-# Scala Development
-#-------------------------------------------------------------
-export SCALA_HOME=$HOME/Programs/scala/2.12.3
-export PATH=${SCALA_HOME}/bin:$PATH
-
-export SBT_HOME=$HOME/Programs/sbt/0.13.16
-export PATH=${SBT_HOME}/bin:$PATH
-
-
-#-------------------------------------------------------------
-# Javascript Development
-#-------------------------------------------------------------
-export NODE_HOME=$HOME/Programs/NodeJS/node-v16.17.0-linux-x64
-export PATH=${NODE_HOME}/bin:$PATH
-
-
-#-------------------------------------------------------------
-# Go Development
-#-------------------------------------------------------------
-export PATH=$PATH:/usr/local/go/bin
-
-
-#-------------------------------------------------------------
-# Microsoft Developer Tools
-#-------------------------------------------------------------
-# .NET 6
-export DOTNET_ROOT=${HOME}/Programs/Dotnet/dotnet-sdk-6.0.101-linux-x64
-export PATH=$PATH:$DOTNET_ROOT
-
-
-# Microsoft SQL Server
-export PATH=$PATH:/opt/mssql-tools/bin
-
-
-#-------------------------------------------------------------
-# Docker
-#-------------------------------------------------------------
-DOCKER_CONFIG=$HOME/.docker
-
-# Install Docker Compose v2 in the folder below according to:
-# https://docs.docker.com/compose/cli-command/#install-on-linux
-export PATH=$PATH:$DOCKER_CONFIG/cli-plugins
-
-
-#-------------------------------------------------------------
-# Other
-#-------------------------------------------------------------
-export PATH=$PATH:/sbin
-export PATH=$PATH:/usr/local/bin
-export PATH=$PATH:$HOME/.local/bin
+if [ -r "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+fi

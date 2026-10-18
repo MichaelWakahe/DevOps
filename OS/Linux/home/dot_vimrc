@@ -1,5 +1,18 @@
-" vim settings
-" This should be saved as .vimrc in your home directory.
+" Conservative Vim defaults with no plugin dependencies.
+set nocompatible
+set encoding=utf-8
+set number
+set ruler
+set showcmd
+set wildmenu
+set history=200
+set backspace=indent,eol,start
+set autoindent
 
-" enable absolute line numbering
-set nu
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+syntax enable
+filetype plugin indent on

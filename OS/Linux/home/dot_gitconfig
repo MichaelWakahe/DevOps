@@ -1,13 +1,13 @@
-[user]
-    name = Michael Wakahe
+[include]
+    path = ~/.gitconfig.local
 [core]
     autocrlf = input
     pager = less -FRSX
-	editor = vim
+    editor = vim
 [push]
-	default = current
+    default = current
 [credential]
-        helper = cache --timeout 86400
+    helper = cache --timeout 86400
 [alias]
     ci = commit
     co = checkout
@@ -21,16 +21,16 @@
     status = auto
     ui = true
 [color "branch"]
-	current = yellow bold
-	local = green bold
-	remote = cyan bold
+    current = yellow bold
+    local = green bold
+    remote = cyan bold
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [color "status"]
-	added = green bold
-	changed = yellow bold
-	untracked = red bold
+    added = green bold
+    changed = yellow bold
+    untracked = red bold
